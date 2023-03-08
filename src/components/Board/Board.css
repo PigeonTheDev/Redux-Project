@@ -1,0 +1,14 @@
+.board {
+  width: 60%;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  margin-top: 2.5rem;
+  color: #4a4a4a;
+}
+
+.table {
+  padding: 1rem;
+  border-radius: 0.25rem;
+  box-shadow: 0 0.5em 1em -0.125em hsl(0deg 0% 4% / 10%), 0 0 0 1px hsl(0deg 0% 4% / 2%);
+}
