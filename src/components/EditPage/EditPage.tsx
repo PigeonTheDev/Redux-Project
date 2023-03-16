@@ -14,21 +14,20 @@ export const EditPage = () => {
   const history = useHistory();
 
   const [emptyValidation, setEmptyValidation] = useState<boolean>(true);
-
-  const user: User = location.state;
+  const [userFormData, setUserFormData] = useState<User>(location.state);
 
   const nameOnChangeHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.target.value.length === 0 || user.age === 0 ? setEmptyValidation(true) : setEmptyValidation(false);
-    user.name = e.target.value;
+    e.target.value.length === 0 || userFormData.age === 0 ? setEmptyValidation(true) : setEmptyValidation(false);
+    setUserFormData((prevValue) => ({ ...prevValue, name: e.target.value }));
   };
 
   const ageOnChangeHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.target.value.length === 0 || user.name.length === 0 ? setEmptyValidation(true) : setEmptyValidation(false);
-    user.age = parseInt(e.target.value);
+    e.target.value.length === 0 || userFormData.name.length === 0 ? setEmptyValidation(true) : setEmptyValidation(false);
+    setUserFormData((prevValue) => ({ ...prevValue, age: parseInt(e.target.value) }));
   };
 
   const confirmOnHandle = () => {
-    dispatch(USER_EDIT(user));
+    dispatch(USER_EDIT(userFormData));
     history.push("/");
   };
 
@@ -37,19 +36,19 @@ export const EditPage = () => {
       <div className="checkboxGen">
         <input
           onChange={() => {
-            user.isActive = !user.isActive;
+            setUserFormData((prevValue) => ({ ...prevValue, isActive: !userFormData.isActive }));
           }}
           type="checkbox"
-          checked={user.isActive ? true : false}
+          checked={userFormData.isActive ? true : false}
         />
         Active
       </div>
       <div className="NameAgeGeneral">
         <div className="NameAge">
-          Name <input className="inp" onChange={nameOnChangeHandle} type="text" placeholder={user.name} />
+          Name <input className="inp" onChange={nameOnChangeHandle} type="text" placeholder={userFormData.name} />
         </div>
         <div className="NameAge">
-          Age <input className="inp" onChange={ageOnChangeHandle} type="number" placeholder={user.age.toString()} />
+          Age <input className="inp" onChange={ageOnChangeHandle} type="number" placeholder={userFormData.age.toString()} />
         </div>
       </div>
       <div>

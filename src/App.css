@@ -1,0 +1,7 @@
+.General {
+  width: 60%;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  margin-top: 2.5rem;
+}
