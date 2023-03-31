@@ -25,7 +25,7 @@ export const AddForm = () => {
       name: userName,
       age: userAge,
       isActive: userActivity,
-      id: Math.round(Math.random() * 10000),
+      id: 1,
     };
     dispatch(USER_ADD(newUser));
   };
@@ -51,7 +51,6 @@ export const AddForm = () => {
           <input className="inp" onChange={ageOnChangeHandle} type="number" placeholder="Enter your age here" />
         </div>
       </div>
-
       <div>
         <Button text="Submit" disabledbtn={emptyValidation} bgcolor="#48c78e" color="#f5f5f5" onclick={submitOnClickHandle}></Button>
       </div>

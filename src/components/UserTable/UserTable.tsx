@@ -3,7 +3,7 @@ import React from "react";
 import { Button } from "../Button/Button";
 import { useDispatch } from "react-redux";
 import { USER_DELETE } from "../../redux/userAction";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import "./UserTable.css";
 
 interface IUserTable {
@@ -13,6 +13,7 @@ interface IUserTable {
 export const UserTable: React.FC<IUserTable> = ({ users }) => {
   const dispatch = useDispatch();
   const history = useHistory();
+
   const deleteOnClickHandle = (user: User) => {
     dispatch(USER_DELETE(user));
   };
@@ -31,7 +32,7 @@ export const UserTable: React.FC<IUserTable> = ({ users }) => {
       </div>
       <div>
         {users.map((user) => (
-          <div className="ItemsGeneral">
+          <div key={user.id} className="ItemsGeneral">
             <div className="userName">{user.name}</div>
             <div className="userActivity">{user.isActive ? "Active" : "Inactive"}</div>
             <div className="userAge">{user.age}</div>

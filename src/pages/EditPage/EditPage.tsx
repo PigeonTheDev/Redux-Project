@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import { USER_EDIT } from "../../redux/userAction";
 import { User } from "../../userModal";
-import { Button } from "../Button/Button";
+import { Button } from "../../components/Button/Button";
 import "./EditPage.css";
 
 export const EditPage = () => {
@@ -45,10 +45,10 @@ export const EditPage = () => {
       </div>
       <div className="NameAgeGeneral">
         <div className="NameAge">
-          Name <input className="inp" onChange={nameOnChangeHandle} type="text" placeholder={userFormData.name} />
+          Name <input className="inp" onChange={nameOnChangeHandle} type="text" value={userFormData.name} />
         </div>
         <div className="NameAge">
-          Age <input className="inp" onChange={ageOnChangeHandle} type="number" placeholder={userFormData.age.toString()} />
+          Age <input className="inp" onChange={ageOnChangeHandle} type="number" value={userFormData.age.toString()} />
         </div>
       </div>
       <div>

@@ -17,13 +17,13 @@ const userReducer: Reducer<User[], IAction> = (state: User[] = [initUser], actio
   const users: User[] = JSON.parse(JSON.stringify(state));
   switch (action.type) {
     case "USER_ADD":
-      users.push(action.payload);
+      const userWithId = { ...action.payload, id: users[users.length - 1].id + 1 };
+      users.push(userWithId);
       return users;
     case "USER_EDIT":
       for (let i = 0; i < users.length; i++) {
         if (users[i].id === action.payload.id) {
           users[i] = action.payload;
-
           break;
         }
       }

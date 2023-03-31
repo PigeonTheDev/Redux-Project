@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { GlobalState } from "../../redux/reducers";
 import { USER_EDIT } from "../../redux/userAction";
 import { User } from "../../userModal";
-import { Button } from "../Button/Button";
+import { Button } from "../../components/Button/Button";
 import "./EditPage.css";
 
 export const EditPage2 = () => {
@@ -17,28 +17,46 @@ export const EditPage2 = () => {
   const { id } = useParams<{ id: string }>();
 
   const userId: number = parseInt(id);
+  const user = users.find((user) => userId === user.id);
 
   const [emptyValidation, setEmptyValidation] = useState<boolean>(true);
-
-  const ensure = (user: User | undefined) => {
+  const [userFormData, setUserFormData] = useState<User>(user!);
+  /* const ensure = (user: User | undefined) => {
     if (user === undefined || user === null) {
       throw new TypeError("message");
     }
 
     return user;
+  }; */
+
+  //const user: User | undefined = users.find((user) => userId === user.id);
+
+  if (userFormData === undefined || null) {
+    history.push("/");
+  }
+
+  const areDiffObject = (prevObject: User, currentObject: User | undefined) => {
+    const prevObjectString = JSON.stringify(prevObject);
+    const currentObjectString = JSON.stringify(currentObject);
+
+    if (prevObjectString !== currentObjectString) {
+      return true;
+    }
+
+    return false;
   };
 
-  const user: User = ensure(users.find((user) => userId === user.id));
+  useEffect(() => {
+    const areUsersDifferent = areDiffObject(userFormData, user);
 
-  const [userFormData, setUserFormData] = useState<User>(user);
+    setEmptyValidation(!areUsersDifferent);
+  }, [user, userFormData]);
 
   const nameOnChangeHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.target.value.length === 0 || user.age === 0 ? setEmptyValidation(true) : setEmptyValidation(false);
     setUserFormData((prevValue) => ({ ...prevValue, name: e.target.value }));
   };
 
   const ageOnChangeHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.target.value.length === 0 || user.name.length === 0 ? setEmptyValidation(true) : setEmptyValidation(false);
     setUserFormData((prevValue) => ({ ...prevValue, age: parseInt(e.target.value) }));
   };
 
@@ -61,10 +79,10 @@ export const EditPage2 = () => {
       </div>
       <div className="NameAgeGeneral">
         <div className="NameAge">
-          Name <input className="inp" onChange={nameOnChangeHandle} type="text" placeholder={userFormData.name} />
+          Name <input className="inp" onChange={nameOnChangeHandle} type="text" value={userFormData.name} />
         </div>
         <div className="NameAge">
-          Age <input className="inp" onChange={ageOnChangeHandle} type="number" placeholder={userFormData.age.toString()} />
+          Age <input className="inp" onChange={ageOnChangeHandle} type="number" value={userFormData.age.toString()} />
         </div>
       </div>
       <div>
